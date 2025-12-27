@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:postgres@localhost:5432/office_pos?schema=public"
+}
+
+model Department {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  users       User[]
+}
+
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  departmentId String?
+  department   Department?  @relation(fields: [departmentId], references: [id])
+}
